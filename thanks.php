@@ -1,12 +1,16 @@
 <?php
+if ($_SERVER['REQUEST_METHOD'] ==='POST') {
+  
+if (!empty($_POST["user_name"]) && filter_var($_POST["user_email"], FILTER_VALIDATE_EMAIL) && !empty($_POST["user_firstname"]) && !empty($_POST["user_tel"]) && !empty($_POST["user_message"]) && !empty($_POST["user_subject"])) {
+  $data=array_map('trim',$_POST);
+  
+  ?>
 
-if (!empty($_POST["user_name"]) && filter_var($_POST["user_email"], FILTER_VALIDATE_EMAIL) && !empty($_POST["user_firstname"]) && !empty($_POST["user_tel"]) && !empty($_POST["user_message"]) && !empty($_POST["user_subject"])) {?>
+<p>Merci <?php echo htmlentities($data['user_firstname']) ?> <?php echo htmlentities($data['user_name'])?> de nous avoir contacté à propos de “<?php echo htmlentities($data['user_subject']) ?>”.
 
-<p>Merci <?php echo $_POST['user_firstname'] ?> <?php echo $_POST['user_name'] ?> de nous avoir contacté à propos de “<?php echo $_POST['user_subject'] ?>”.
+Un de nos conseiller vous contactera soit à l’adresse <?php echo htmlentities($data['user_email']) ?> ou par téléphone au <?php echo htmlentities($data['user_tel']) ?> dans les plus brefs délais pour traiter votre demande :<br> 
 
-Un de nos conseiller vous contactera soit à l’adresse <?php echo $_POST['user_email'] ?> ou par téléphone au <?php echo $_POST['user_tel'] ?> dans les plus brefs délais pour traiter votre demande :<br> 
-
-<?php echo $_POST['user_message']; } ?></p>
+<?php echo htmlentities($_POST['user_message']); } ?></p>
 
  <?php if (empty($_POST["user_name"])) {
     echo "Votre nom est requis \n";
@@ -26,4 +30,5 @@ Un de nos conseiller vous contactera soit à l’adresse <?php echo $_POST['user
   if (empty($_POST["user_subject"])) {
     echo "Sélectionnez un sujet \n";
   } 
+}
 ?>
